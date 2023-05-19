@@ -1,0 +1,40 @@
+(?i)ACT
+(?i)G\.?P\.?A\.?
+(?i)GRE
+(?i)I-?9
+(?i)LSAT
+(?i)MCAT
+(?i)NC-?4
+(?i)PAF
+(?i)SAT
+(?i)W-?2
+(?i)(academic)? transcripts?
+(?i)(add-drop)
+(?i)(drop-add)
+[aA]nnual [aA]ppraisals?
+[aA]nnual [pP]erformance [aA]ppraisals?
+[cC]areer.[bB]anded [wW]ork\s*(?:[pP]lans?)
+[cC]ase\s*[fF]iles?
+[cC]ase [rR]ecords?
+[cC]onfidential(?:ity)?
+[dD]onors?
+[dD]river'?s'? [lL]icenses?
+[eE]xam(s|inations?|)
+[gG]rad(?:es?|ing)
+[gG]rievances?
+[Hh]iring [Cc]omms?(?:ittees?|)
+[iI]mmuniz(?:e|ing|ations?)
+[mM]edical [rR]ecords?
+[mM]onthly [bB]reakdown [rR]eport
+[nN]omination [Cc]omms?(?:ittees?|)
+[pP]atient [rR]ecords?
+[pP]ayroll
+[pP]ersonnel [aA]ction [fF]orm
+[pP]ersonnel [fF]iles?
+[rR]ecommendations?
+[Ss]earch [Cc]omms?(?:ittees?|)
+[tT]erminations?
+[tT]ime\s*sheet
+[wW]ithdr[ae]ws?(?:n|als?|ing)?
+[wW]ork\s*[pP]lan
+[wW]orker'?s'? [cC]omp(?:ensation)?
