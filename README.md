@@ -2,7 +2,7 @@
 
 This repository contains scripts used during born-digital processing at NC State University Libraries.
 
-1. Clone the repository: `git clone https://github.com/ShellyYBlack/born-digital-reporting.git` Alternatively, you can also click the green <> Code button and download a ZIP of the files.
+1. Clone the repository: `git clone https://github.com/NCSU-Libraries/bdap-reporting.git` Alternatively, you can also click the green <> Code button and download a ZIP of the files.
 1. Change to the born-digital-reporting directory: `cd born-digital-reporting`
 1. Build the image: `docker build -t bd-reports .`
 
