@@ -22,7 +22,7 @@ for stringpattern in piilist:
             # print(resulttuples)
             resultlist.insert(1,resulttuples)
             print(resultlist)
-            with open('file_path_pii.csv', mode='w') as result_file:
+            with open('/reports/file_path_pii.csv', mode='w') as result_file:
                 writer = csv.writer(result_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 for row in resultlist:
                     writer.writerow(row)             
