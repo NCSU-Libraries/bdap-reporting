@@ -32,6 +32,5 @@ Identify file paths that may contain PII based on a list of regular expressions.
 
 This script creates a CSV with the filename, mtime, and ctime for each <fileobject> element in a [DFXML file](https://github.com/dfxml-working-group/dfxml_python).
 
-1. Copy your DFXML to the /born-digital-reporting directory.
-1. Run the script: `docker run -v $PWD:/src -it bd-reports bash -c "python3 dfxml_dates.py"`
-1. Open dfxml-dates.csv in Excel and sort the columns to find the earliest date.
+1. Replace the path to the directory containing your DFXML in this command, and then run it: `docker run -v /path/to/dfxml/dir:/dfxml -it bd-reports bash -c "cd /dfxml && python3 /src/dfxml_dates.py"`
+1. The script will save dfxml-dates.csv in the same directory as your DFXML file. Open dfxml-dates in Excel and sort the columns to find the earliest date.
