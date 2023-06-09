@@ -6,7 +6,7 @@ with open("rlist.txt", "r") as piidoc:
 #print(piilist)
 
 filepathlist = []
-for dirpath, dirnames, filenames in os.walk("/syblack/Documents/file_path_pii/testfiles"):
+for dirpath, dirnames, filenames in os.walk("/logical"):
     for file in filenames:
         filepathlist.append(os.path.join(dirpath, file))
 #print(filepathlist)
