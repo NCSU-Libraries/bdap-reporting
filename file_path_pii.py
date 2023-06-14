@@ -1,7 +1,7 @@
 import re, os, csv
 
 piilist = []
-with open("rlist.txt", "r") as piidoc:
+with open("/regex/file_path_regex.txt", "r") as piidoc:
     piilist = (piidoc.read().splitlines())
 #print(piilist)
 
