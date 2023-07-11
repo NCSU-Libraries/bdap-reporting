@@ -32,6 +32,7 @@
 (?i)exam(s|inations?|)
 (?i)grad(?:es?|ing)
 (?i)grievances?
+(?i)health[-\s_]*insurance
 (?i)(hiring)?(nomination)?[-\s_]*?comms?(?:ittees?)
 (?i)immuniz(?:e|ing|ations?)
 (?i)medical[-\s_]*records?
