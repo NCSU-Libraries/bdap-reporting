@@ -1,4 +1,4 @@
-FROM python:3.12.0a4-bullseye
+FROM python:3
 COPY . /src
 RUN pip install beautifulsoup4 lxml
 WORKDIR /src
