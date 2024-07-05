@@ -27,6 +27,7 @@
 (?i)case[-\s_]*files?
 (?i)case[-\s_]*records?
 (?i)confidential(?:ity)?
+(?i)cv
 (?i)donors?
 (?i)driver'?s'?[-\s_]*licenses?
 (?i)exam(s|inations?|)
@@ -35,6 +36,7 @@
 (?i)health[-\s_]*insurance
 (?i)(hiring)?(nomination)?[-\s_]*?comms?(?:ittees?)
 (?i)immuniz(?:e|ing|ations?)
+(?i)invoice
 (?i)medical[-\s_]*records?
 (?i)monthly[-\s_]*breakdown[-\s_]*report
 (?i)passport
@@ -44,6 +46,7 @@
 (?i)personnel[-\s_]*action[-\s_]*form
 (?i)personnel[-\s_]*files?
 (?i)recommendations?
+(?i)receipt
 (?i)^search[-\s_]*comms?(?:ittees?)
 (?i)tax
 (?i)terminations?
