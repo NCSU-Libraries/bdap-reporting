@@ -10,9 +10,18 @@ This repository contains scripts used during born-digital processing at NC State
 
 This script calculates the total extent in MB, files, and websites from the quantity and unittype tags in EAD3 XML finding aids. It provides the totals for the entire collection and each series, as well as all the collections. 
 
-1. To download all finding aids, run: `docker run -v $PWD/EAD-XML:/EAD-XML/ -it bd-reports bash -c "wget https://www.lib.ncsu.edu/findingaids/ead.txt ; cd /EAD-XML ; bash /src/download-EAD.sh"` 
-To download a single finding aid, run: `docker run -v $PWD/EAD-XML:/EAD-XML/ -it bd-reports bash -c "cd /EAD-XML ; wget -O mc00467.xml https://www.lib.ncsu.edu/findingaids/mc00467/ead"`
-1. Calculate extents by replacing path to directory and running: `python3 bd-extent-calculator.py /EAD-XML > /EAD-XML/output.csv`
+1. Download finding aid/s:
+    * To download all finding aids, run:
+    
+    `docker run -v $PWD/EAD-XML:/EAD-XML/ -it bd-reports bash -c "wget https://www.lib.ncsu.edu/findingaids/ead.txt ; cd /EAD-XML ; bash /src/download-EAD.sh"` 
+    * To download a single finding aid, edit the collection IDs in this command, then run it:
+
+    `docker run -v $PWD/EAD-XML:/EAD-XML/ -it bd-reports bash -c "cd /EAD-XML ; wget -O mc00467.xml https://www.lib.ncsu.edu/findingaids/mc00467/ead"`
+
+1. Calculate extents by replacing path to directory and running:
+    
+    `docker run -v $PWD/EAD-XML:/EAD-XML/ -it bd-reports bash -c "python3 bd-extent-calculator.py /EAD-XML > /EAD-XML/output.csv"`
+
 
 ### Tips
 
