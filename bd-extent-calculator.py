@@ -1,61 +1,112 @@
 from bs4 import BeautifulSoup,Tag
 import sys,os,glob,re
 
-# This parses the series
-def parse_series(seriesTitle, collectionTitle):
-    did = seriesTitle.parent
+# This parses the components
+def parse_component(componentTitle, collectionTitle):
+    # c element may be either series or file
+    did = componentTitle.parent
+    component = did.parent
+    
+    # Search for c elements under the top level c
+    if component.find_all('c'):
+        # Create a list of c tags, i.e. file or subseries, under series
+        # This assumes there are no sub-series extents 
+        listFileRecords =[]
+        for sibling in did.next_siblings:
+            if isinstance(sibling, Tag):
+                listFileRecords.append(sibling)
+        # Add c tags below subseries to list
+        for sibling in listFileRecords:
+            for child in sibling.find_all('c'):
+                if isinstance(child, Tag):
+                    listFileRecords.append(child)
+                                    
+        # Create a list of all the quantity tags
+        listQuantity =[]
+        for c in listFileRecords:
+            for quantity in c.find_all('quantity'):
+                listQuantity.append(quantity)
 
-    # Create a list of c tags, i.e. file or subseries
-    # This assumes there are no sub-series extents 
-    listFileRecords =[]
-    for sibling in did.next_siblings:
-        if isinstance(sibling, Tag):
-            listFileRecords.append(sibling)
-    # Add c tags below subseries to list
-    for sibling in listFileRecords:
-        for child in sibling.find_all('c'):
-            if isinstance(child, Tag):
-                listFileRecords.append(child)
-                                
-    # Create a list of all the quantity tags
-    listQuantity =[]
-    for c in listFileRecords:
-        for quantity in c.find_all('quantity'):
-            listQuantity.append(quantity)
+        # For each quantity tag, if its next sibling (unittype tag) has bytes/files/websites, add to list
+        listKB = []
+        listMB = []
+        listGB = []
+        listFiles =[]
+        listWebsites = []
+        for quantity in listQuantity:
+            strQuantity = quantity.text
+            # This assumes there will always be a unittype somewhere after quantity
+            unittype = quantity.find_next_sibling("unittype")
+            if re.search('[kK]ilobytes?', unittype.text):
+                listKB.append(eval(strQuantity))
+            if re.search('[mM]egabytes?', unittype.text):
+                listMB.append(eval(strQuantity))
+            if re.search('[gG]igabytes?', unittype.text):
+                listGB.append(eval(strQuantity))
+            # Looks for the word at the beginning of start to avoid "electronic file transfer"    
+            if re.match('[fF]iles?', unittype.text):
+                listFiles.append(eval(strQuantity))
+            if re.search('[wW]ebsites?', unittype.text):
+                listWebsites.append(eval(strQuantity))
 
-    # For each quantity tag, if its next sibling (unittype tag) has bytes/files/websites, add to list
-    listKB = []
-    listMB = []
-    listGB = []
-    listFiles =[]
-    listWebsites = []
-    for quantity in listQuantity:
-        strQuantity = quantity.text
-        # This assumes there will always be a unittype somewhere after quantity
-        unittype = quantity.find_next_sibling("unittype")
-        if re.search('[kK]ilobytes?', unittype.text):
-            listKB.append(eval(strQuantity))
-        if re.search('[mM]egabytes?', unittype.text):
-            listMB.append(eval(strQuantity))
-        if re.search('[gG]igabytes?', unittype.text):
-            listGB.append(eval(strQuantity))
-        if re.search('[fF]iles?', unittype.text):
-            listFiles.append(eval(strQuantity))
-        if re.search('[wW]ebsites?', unittype.text):
-            listWebsites.append(eval(strQuantity))
+        # Get a sum total of the lists
+        totalKB = sum(listKB)
+        totalMB = sum(listMB)
+        totalGB = sum(listGB)
+        seriesTotalFiles = sum(listFiles)
+        seriesTotalWeb = sum(listWebsites)
 
-    # Get a sum total of the lists
-    totalKB = sum(listKB)
-    totalMB = sum(listMB)
-    totalGB = sum(listGB)
-    seriesTotalFiles = sum(listFiles)
-    seriesTotalWeb = sum(listWebsites)
+        # Add up the lists of bytes, files, and websites to get grand totals
+        seriesTotalMB = totalKB/1024+totalMB+totalGB*1024
+        seriesResult = '"' + collectionTitle + '/' + componentTitle.text + '"' + ',' + str(round(seriesTotalMB)) + ',' + str(seriesTotalFiles) + ',' + str(seriesTotalWeb)
+    else:
+        # Solo file record means it's not in a series
+        listSoloFileRecords =[]
+        for soloFile in component:
+            if isinstance(soloFile, Tag):
+                listSoloFileRecords.append(soloFile)
 
-    # Add up the lists of bytes, files, and websites to get grand totals
-    seriesTotalMB = totalKB/1024+totalMB+totalGB*1024
-    seriesResult = '"' + collectionTitle + '/' + seriesTitle.text + '"' + ',' + str(round(seriesTotalMB)) + ',' + str(seriesTotalFiles) + ',' + str(seriesTotalWeb)
+        # Create a list of all the quantity tags
+        listQuantity =[]
+        for c in listSoloFileRecords:
+            for quantity in c.find_all('quantity'):
+                listQuantity.append(quantity)
+
+        # For each quantity tag, if its next sibling (unittype tag) has bytes/files/websites, add to list
+        listKB = []
+        listMB = []
+        listGB = []
+        listFiles =[]
+        listWebsites = []
+        for quantity in listQuantity:
+            strQuantity = quantity.text
+            # This assumes there will always be a unittype somewhere after quantity
+            unittype = quantity.find_next_sibling("unittype")
+            if re.search('[kK]ilobytes?', unittype.text):
+                listKB.append(eval(strQuantity))
+            if re.search('[mM]egabytes?', unittype.text):
+                listMB.append(eval(strQuantity))
+            if re.search('[gG]igabytes?', unittype.text):
+                listGB.append(eval(strQuantity))
+            # Looks for the word at the beginning of start to avoid "electronic file transfer"    
+            if re.match('[fF]iles?', unittype.text):
+                listFiles.append(eval(strQuantity))
+            if re.search('[wW]ebsites?', unittype.text):
+                listWebsites.append(eval(strQuantity))    
+
+        # Get a sum total of the lists
+        totalKB = sum(listKB)
+        totalMB = sum(listMB)
+        totalGB = sum(listGB)
+        seriesTotalFiles = sum(listFiles)
+        seriesTotalWeb = sum(listWebsites)
+                
+        # Add up the lists of bytes, files, and websites to get grand totals
+        seriesTotalMB = totalKB/1024+totalMB+totalGB*1024
+        seriesResult = '"' + collectionTitle + '/' + componentTitle.text + '"' + ',' + str(round(seriesTotalMB)) + ',' + str(seriesTotalFiles) + ',' + str(seriesTotalWeb)
+
     return [seriesTotalMB,seriesTotalFiles,seriesTotalWeb,seriesResult]
-
+    
 # This parses the collection
 def parse_collection(soup):
 
@@ -70,10 +121,10 @@ def parse_collection(soup):
         sys.exit()
     seriesResultList = []
     
-    # Get series titles
-    seriesTitles = soup.select('dsc > c > did >  unittitle')
-    for seriesTitle in seriesTitles:
-        seriesTotalMB, seriesTotalFiles, seriesTotalWeb, seriesResult = parse_series(seriesTitle,collectionTitle)
+    # Get component titles
+    componentTitles = soup.select('dsc > c > did >  unittitle')
+    for componentTitle in componentTitles:
+        seriesTotalMB, seriesTotalFiles, seriesTotalWeb, seriesResult = parse_component(componentTitle,collectionTitle)
         collectionTotalSizeMB = collectionTotalSizeMB + seriesTotalMB
         collectionTotalFiles = collectionTotalFiles + seriesTotalFiles
         collectionTotalWeb = collectionTotalWeb + seriesTotalWeb
