@@ -15,18 +15,13 @@ def parse_component(componentTitle, collectionTitle):
         for sibling in did.next_siblings:
             if isinstance(sibling, Tag):
                 listFileRecords.append(sibling)
-        # Add c tags below subseries to list
-        for sibling in listFileRecords:
-            for child in sibling.find_all('c'):
-                if isinstance(child, Tag):
-                    listFileRecords.append(child)
-                                    
+
         # Create a list of all the quantity tags
         listQuantity =[]
         for c in listFileRecords:
             for quantity in c.find_all('quantity'):
                 listQuantity.append(quantity)
-
+        
         # For each quantity tag, if its next sibling (unittype tag) has bytes/files/websites, add to list
         listKB = []
         listMB = []
@@ -71,7 +66,7 @@ def parse_component(componentTitle, collectionTitle):
         for c in listSoloFileRecords:
             for quantity in c.find_all('quantity'):
                 listQuantity.append(quantity)
-
+        
         # For each quantity tag, if its next sibling (unittype tag) has bytes/files/websites, add to list
         listKB = []
         listMB = []
