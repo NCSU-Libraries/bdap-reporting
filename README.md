@@ -49,4 +49,4 @@ This script creates a CSV with the filename, mtime, and ctime for each <fileobje
 This script extracts the file format counts from the Brunnhilde report.html file, then formats them as a Scope & Contents note for ArchivesSpace.
 
 1. Edit the path to your Brunnhilde directory in the following command, then run it:
-`docker run -v /path/to/brunnhilde:/brunnhilde -it --rm bd-reports bash -c "cd /brunnhilde &&python3 scopeContents.py report.html"`
+`docker run -v /path/to/brunnhilde:/brunnhilde -it --rm bd-reports bash -c "cd /brunnhilde &&python3 /src/scopeContents.py report.html"`
