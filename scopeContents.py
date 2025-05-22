@@ -1,7 +1,3 @@
-# docker run -v $HOME/born_digital/borndigital:/Users/born_digital/borndigital -it --rm bd-reports bash
-# cd /path/to/brunnhilde/directory
-# python3 scopeContents.py report.html
-
 from bs4 import BeautifulSoup
 import sys
 

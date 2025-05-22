@@ -43,3 +43,10 @@ This script creates a CSV with the filename, mtime, and ctime for each <fileobje
 
 1. Replace the path to the directory containing your DFXML in this command, and then run it: `docker run -v /path/to/dfxml/dir:/dfxml -it bd-reports bash -c "cd /dfxml && python3 /src/dfxml_dates.py"`
 1. The script will save dfxml-dates.csv in the same directory as your DFXML file. Open dfxml-dates in Excel and sort the columns to find the earliest date.
+
+## Generate a Scope & Contents note
+
+This script extracts the file format counts from the Brunnhilde report.html file, then formats them as a Scope & Contents note for ArchivesSpace.
+
+1. Edit the path to your Brunnhilde directory in the following command, then run it:
+`docker run -v /path/to/brunnhilde:/brunnhilde -it --rm bd-reports bash -c "cd /brunnhilde &&python3 scopeContents.py report.html"`
